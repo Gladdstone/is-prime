@@ -120,7 +120,22 @@ is_prime:
 # ######################################
 # ##### BEGIN STUDENT CODE BLOCK 2 #####
 
-
+		addi $s0, $zero, 2					# s0 = 0
+		loop:								
+			slt $t0, $s0, $a0				# if(s0 < a0) { t0 = 1 }
+			beq $t0, $zero, return_true		# if(t0 == 0) { goto return_true }
+			div $a0, $s0					# lo = a0 / s0, hi = a0 % s0
+			mfhi $t1						# t1 = hi
+			beq $t1, $zero, return_false	# if(t1 == 0) { goto return_false }
+			addi $s0, $s0, 1				# s0++
+			j loop							# goto loop
+		return_true:
+			addi $v0, $zero, 1				# v0 = 1
+			j done							# goto done
+		return_false:
+			addi $v0, $zero, 0				# v0 = 0
+			j done							# goto done
+		done:
 
 # ###### END STUDENT CODE BLOCK 2 ######
 # ######################################
