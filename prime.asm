@@ -79,6 +79,18 @@ find_primes:
 # ######################################
 # ##### BEGIN STUDENT CODE BLOCK 1 #####
 
+		addi	$s0, $zero, 3
+		addi	$s1, $zero, 102
+		prime_loop:
+			slt		$t0, $s0, $s1
+			bne		$t0, $zero, prime_done
+			add		$a0, $zero, $s0
+			jal		is_prime
+			bne		$v0, $zero, print_number
+			addi	$s0, $s0, 2
+			j prime_loop
+
+		prime_done:
 
 # ###### END STUDENT CODE BLOCK 1 ######
 # ######################################
