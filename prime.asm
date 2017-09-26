@@ -83,13 +83,16 @@ find_primes:
 		addi	$s1, $zero, 102
 		prime_loop:
 			slt		$t0, $s0, $s1
-			bne		$t0, $zero, prime_done
+			beq		$t0, $zero, prime_done
 			add		$a0, $zero, $s0
 			jal		is_prime
-			bne		$v0, $zero, print_number
+			bne		$v0, $zero, print_prime
 			addi	$s0, $s0, 2
 			j prime_loop
-
+		print_prime:
+			jal 	print_number
+			addi	$s0, $s0, 2
+			j prime_loop
 		prime_done:
 
 # ###### END STUDENT CODE BLOCK 1 ######

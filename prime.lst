@@ -83,119 +83,123 @@
   83 0044 20110066			addi	$s1, $zero, 102
   84 0048               		prime_loop:
   85 0048 0211402A				slt		$t0, $s0, $s1
-  86 004c 15000005				bne		$t0, $zero, prime_done
+  86 004c 11000008				beq		$t0, $zero, prime_done
   87 0050 00102020				add		$a0, $zero, $s0
-  88 0054 0C000024				jal		is_prime
-  89 0058 1440002E				bne		$v0, $zero, print_number
+  88 0054 0C000027				jal		is_prime
+  89 0058 14400002				bne		$v0, $zero, print_prime
   90 005c 22100002				addi	$s0, $s0, 2
   91 0060 08000012				j prime_loop
-  92 0064               
-  93 0064               		prime_done:
-  94 0064               
-  95 0064               # ###### END STUDENT CODE BLOCK 1 ######
-  96 0064               # ######################################
-  97 0064               
-  98 0064               
-  99 0064 8FBF0020	        lw      $ra, 32($sp)    # restore the ra & s reg's from the stack
- 100 0068 8FB7001C	        lw      $s7, 28($sp)
- 101 006c 8FB60018	        lw      $s6, 24($sp)
- 102 0070 8FB50014	        lw      $s5, 20($sp)
- 103 0074 8FB40010	        lw      $s4, 16($sp)
- 104 0078 8FB3000C	        lw      $s3, 12($sp)
- 105 007c 8FB20008	        lw      $s2, 8($sp)
- 106 0080 8FB10004	        lw      $s1, 4($sp)
- 107 0084 8FB00000	        lw      $s0, 0($sp)
- 108 0088 23BD0028	        addi    $sp,$sp,40      # clean up stack
- 109 008c 03E00008		jr	$ra
- 110 0090               
- 111 0090               #
- 112 0090               # Name:		is_prime 
- 113 0090               #
- 114 0090               # Description:	checks to see if the num passed in is prime
- 115 0090               # Arguments:  	a0	The number to test to see if prime
- 116 0090               # Returns: 	v0	a value of 1 if the number in a0 is prime
- 117 0090               #			a value of 0 otherwise
- 118 0090               #
- 119 0090               
- 120 0090               is_prime:
- 121 0090 23BDFFD8	        addi    $sp,$sp,-40    	# allocate stackframe (doubleword aligned)
- 122 0094 AFBF0020	        sw      $ra, 32($sp)    # store the ra & s reg's on the stack
- 123 0098 AFB7001C	        sw      $s7, 28($sp)
- 124 009c AFB60018	        sw      $s6, 24($sp)
- 125 00a0 AFB50014	        sw      $s5, 20($sp)
- 126 00a4 AFB40010	        sw      $s4, 16($sp)
- 127 00a8 AFB3000C	        sw      $s3, 12($sp)
- 128 00ac AFB20008	        sw      $s2, 8($sp)
- 129 00b0 AFB10004	        sw      $s1, 4($sp)
- 130 00b4 AFB00000	        sw      $s0, 0($sp)
- 131 00b8               
- 132 00b8               # ######################################
- 133 00b8               # ##### BEGIN STUDENT CODE BLOCK 2 #####
- 134 00b8               
- 135 00b8 20100002			addi $s0, $zero, 2					# s0 = 0
- 136 00bc               		loop:								
- 137 00bc 0204402A				slt $t0, $s0, $a0				# if(s0 < a0) { t0 = 1 }
- 138 00c0 11000005				beq $t0, $zero, return_true		# if(t0 == 0) { goto return_true }
- 139 00c4 0090001A				div $a0, $s0					# lo = a0 / s0, hi = a0 % s0
- 140 00c8 00004810				mfhi $t1						# t1 = hi
- 141 00cc 11200004				beq $t1, $zero, return_false	# if(t1 == 0) { goto return_false }
- 142 00d0 22100001				addi $s0, $s0, 1				# s0++
- 143 00d4 0800002F				j loop							# goto loop
- 144 00d8               		return_true:
- 145 00d8 20020001				addi $v0, $zero, 1				# v0 = 1
- 146 00dc 0800003A				j done							# goto done
- 147 00e0               		return_false:
- 148 00e0 20020000				addi $v0, $zero, 0				# v0 = 0
- 149 00e4 0800003A				j done							# goto done
- 150 00e8               		done:
- 151 00e8               
- 152 00e8               # ###### END STUDENT CODE BLOCK 2 ######
- 153 00e8               # ######################################
- 154 00e8               
- 155 00e8 8FBF0020	        lw      $ra, 32($sp)    # restore the ra & s reg's from the stack
- 156 00ec 8FB7001C	        lw      $s7, 28($sp)
- 157 00f0 8FB60018	        lw      $s6, 24($sp)
- 158 00f4 8FB50014	        lw      $s5, 20($sp)
- 159 00f8 8FB40010	        lw      $s4, 16($sp)
- 160 00fc 8FB3000C	        lw      $s3, 12($sp)
- 161 0100 8FB20008	        lw      $s2, 8($sp)
- 162 0104 8FB10004	        lw      $s1, 4($sp)
- 163 0108 8FB00000	        lw      $s0, 0($sp)
- 164 010c 23BD0028	        addi    $sp,$sp,40      # clean up the stack
- 165 0110 03E00008		jr	$ra
- 166 0114               
- 167 0114               #
- 168 0114               # Name;		print_number 
- 169 0114               #
- 170 0114               # Description:	This routine reads a number then a newline to stdout
- 171 0114               # Arguments:	a0,the number to print
- 172 0114               # Returns:	nothing
- 173 0114               #
- 174 0114               print_number:
- 175 0114               
- 176 0114 34020001	        li 	$v0,PRINT_INT
- 177 0118 0000000C	        syscall			#print a0
- 178 011c               
- 179 011c 3C040000	        la	$a0, newline
-     0120 34840000
- 180 0124 34020004	        li      $v0,PRINT_STRING
- 181 0128 0000000C	        syscall			#print a newline
- 182 012c               
- 183 012c 03E00008	        jr      $ra
+  92 0064               		print_prime:
+  93 0064 0C000048				jal 	print_number
+  94 0068 22100002				addi	$s0, $s0, 2
+  95 006c 08000012				j prime_loop
+  96 0070               		prime_done:
+  97 0070               
+  98 0070               # ###### END STUDENT CODE BLOCK 1 ######
+  99 0070               # ######################################
+ 100 0070               
+ 101 0070               
+ 102 0070 8FBF0020	        lw      $ra, 32($sp)    # restore the ra & s reg's from the stack
+ 103 0074 8FB7001C	        lw      $s7, 28($sp)
+ 104 0078 8FB60018	        lw      $s6, 24($sp)
+ 105 007c 8FB50014	        lw      $s5, 20($sp)
+ 106 0080 8FB40010	        lw      $s4, 16($sp)
+ 107 0084 8FB3000C	        lw      $s3, 12($sp)
+ 108 0088 8FB20008	        lw      $s2, 8($sp)
+ 109 008c 8FB10004	        lw      $s1, 4($sp)
+ 110 0090 8FB00000	        lw      $s0, 0($sp)
+ 111 0094 23BD0028	        addi    $sp,$sp,40      # clean up stack
+ 112 0098 03E00008		jr	$ra
+ 113 009c               
+ 114 009c               #
+ 115 009c               # Name:		is_prime 
+ 116 009c               #
+ 117 009c               # Description:	checks to see if the num passed in is prime
+ 118 009c               # Arguments:  	a0	The number to test to see if prime
+ 119 009c               # Returns: 	v0	a value of 1 if the number in a0 is prime
+ 120 009c               #			a value of 0 otherwise
+ 121 009c               #
+ 122 009c               
+ 123 009c               is_prime:
+ 124 009c 23BDFFD8	        addi    $sp,$sp,-40    	# allocate stackframe (doubleword aligned)
+ 125 00a0 AFBF0020	        sw      $ra, 32($sp)    # store the ra & s reg's on the stack
+ 126 00a4 AFB7001C	        sw      $s7, 28($sp)
+ 127 00a8 AFB60018	        sw      $s6, 24($sp)
+ 128 00ac AFB50014	        sw      $s5, 20($sp)
+ 129 00b0 AFB40010	        sw      $s4, 16($sp)
+ 130 00b4 AFB3000C	        sw      $s3, 12($sp)
+ 131 00b8 AFB20008	        sw      $s2, 8($sp)
+ 132 00bc AFB10004	        sw      $s1, 4($sp)
+ 133 00c0 AFB00000	        sw      $s0, 0($sp)
+ 134 00c4               
+ 135 00c4               # ######################################
+ 136 00c4               # ##### BEGIN STUDENT CODE BLOCK 2 #####
+ 137 00c4               
+ 138 00c4 20100002			addi $s0, $zero, 2					# s0 = 0
+ 139 00c8               		loop:								
+ 140 00c8 0204402A				slt $t0, $s0, $a0				# if(s0 < a0) { t0 = 1 }
+ 141 00cc 11000005				beq $t0, $zero, return_true		# if(t0 == 0) { goto return_true }
+ 142 00d0 0090001A				div $a0, $s0					# lo = a0 / s0, hi = a0 % s0
+ 143 00d4 00004810				mfhi $t1						# t1 = hi
+ 144 00d8 11200004				beq $t1, $zero, return_false	# if(t1 == 0) { goto return_false }
+ 145 00dc 22100001				addi $s0, $s0, 1				# s0++
+ 146 00e0 08000032				j loop							# goto loop
+ 147 00e4               		return_true:
+ 148 00e4 20020001				addi $v0, $zero, 1				# v0 = 1
+ 149 00e8 0800003D				j done							# goto done
+ 150 00ec               		return_false:
+ 151 00ec 20020000				addi $v0, $zero, 0				# v0 = 0
+ 152 00f0 0800003D				j done							# goto done
+ 153 00f4               		done:
+ 154 00f4               
+ 155 00f4               # ###### END STUDENT CODE BLOCK 2 ######
+ 156 00f4               # ######################################
+ 157 00f4               
+ 158 00f4 8FBF0020	        lw      $ra, 32($sp)    # restore the ra & s reg's from the stack
+ 159 00f8 8FB7001C	        lw      $s7, 28($sp)
+ 160 00fc 8FB60018	        lw      $s6, 24($sp)
+ 161 0100 8FB50014	        lw      $s5, 20($sp)
+ 162 0104 8FB40010	        lw      $s4, 16($sp)
+ 163 0108 8FB3000C	        lw      $s3, 12($sp)
+ 164 010c 8FB20008	        lw      $s2, 8($sp)
+ 165 0110 8FB10004	        lw      $s1, 4($sp)
+ 166 0114 8FB00000	        lw      $s0, 0($sp)
+ 167 0118 23BD0028	        addi    $sp,$sp,40      # clean up the stack
+ 168 011c 03E00008		jr	$ra
+ 169 0120               
+ 170 0120               #
+ 171 0120               # Name;		print_number 
+ 172 0120               #
+ 173 0120               # Description:	This routine reads a number then a newline to stdout
+ 174 0120               # Arguments:	a0,the number to print
+ 175 0120               # Returns:	nothing
+ 176 0120               #
+ 177 0120               print_number:
+ 178 0120               
+ 179 0120 34020001	        li 	$v0,PRINT_INT
+ 180 0124 0000000C	        syscall			#print a0
+ 181 0128               
+ 182 0128 3C040000	        la	$a0, newline
+     012c 34840000
+ 183 0130 34020004	        li      $v0,PRINT_STRING
+ 184 0134 0000000C	        syscall			#print a newline
+ 185 0138               
+ 186 0138 03E00008	        jr      $ra
 
 
 MAX           = 00000066   
 MIN           = 00000003   
 PRINT_INT     = 00000001   
 PRINT_STRING  = 00000004   
-done            000000E8 R  text 
+done            000000F4 R  text 
 find_primes     00000018 R  text 
-is_prime        00000090 R  text 
-loop            000000BC R  text 
+is_prime        0000009C R  text 
+loop            000000C8 R  text 
 main            00000000 RG text 
 newline         00000000 R  data 
-prime_done      00000064 R  text 
+prime_done      00000070 R  text 
 prime_loop      00000048 R  text 
-print_number    00000114 R  text 
-return_false    000000E0 R  text 
-return_true     000000D8 R  text 
+print_number    00000120 R  text 
+print_prime     00000064 R  text 
+return_false    000000EC R  text 
+return_true     000000E4 R  text 
